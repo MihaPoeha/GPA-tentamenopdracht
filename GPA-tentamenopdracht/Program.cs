@@ -1,13 +1,24 @@
-﻿using System;
+﻿
+// Mika Spoelstra 500826255 IG-101
+// GPA-tentamenopdracht Canabalt
+
+using System;
 using System.Collections.Generic;
 using System.Threading;
-
+/* not working...
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Content;
+using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
+*/
 
 namespace GPA_tentamenopdracht
 {
     static class Globals
     {
-        public static int lives = 3; 
+        public static int lives = 3;
+        public static bool fall;
+
     }
     class Program
     {
@@ -64,8 +75,11 @@ namespace GPA_tentamenopdracht
             Console.Title = "Runner";
             const int WINDOW_HEIGHT = 30;
             const int WINDOW_WIDTH = 70;
-            Console.BackgroundColor = ConsoleColor.Black;
-            
+
+            //unfortunately I did not managed to get a working background image, this code below used to work in previous assignments...
+            //Texture2d background;
+            //...
+            //background = Content.Load<Texture2D>("cityBackground");
 
             bool isGamePlay = true;
             List<tu> TubeList = new List<tu>();
@@ -83,6 +97,7 @@ namespace GPA_tentamenopdracht
             Console.BufferHeight = Console.WindowHeight = WINDOW_HEIGHT;
             Console.BufferWidth = Console.WindowWidth = WINDOW_WIDTH;
 
+
             Console.Clear();
 
             //initialize Player
@@ -90,7 +105,7 @@ namespace GPA_tentamenopdracht
             runner.x = 15;
             runner.y = 24;
             runner.symbol = 'R';
-            runner.color = ConsoleColor.White;
+            runner.color = ConsoleColor.Yellow;
 
             //game loop
             while (isGamePlay)
@@ -107,20 +122,20 @@ namespace GPA_tentamenopdracht
 
                 if (runner.y < WINDOW_HEIGHT - 1)
                 {
-                    bool nFall = true;
+                    Globals.fall = true;
                     if (TubeList.Count >= 2)
                     {
                         for (int i = 0; i < 2; i++)
                         {
                             if (runner.y + 1 == TubeList[i].y && runner.x + 1 >= TubeList[i].x && runner.x + 1 <= TubeList[i].x + 10)
                             {
-                                nFall = false;
+                                Globals.fall = false;
                                 score = score + 1;
                             }
                         }
                     }
 
-                    if (nFall)
+                    if (Globals.fall)
                     {
                         runner.y += 1;
                     }
@@ -135,19 +150,23 @@ namespace GPA_tentamenopdracht
 
                     if (Globals.lives == 0)
                     {
-                        PrintString(30, 12, "*Game Over*", ConsoleColor.White);
-                        PrintString(24, 14, "Press any key to restart", ConsoleColor.White);
+                        PrintString(30, 12, "*Game Over*", ConsoleColor.Red);
+                        PrintString(24, 14, "Press any key to restart", ConsoleColor.Yellow);
                         score = 0;
                         Globals.lives = 3;
                         runner.x = 15;
                         runner.y = 10;
                         Console.ReadKey();
+
                     }
                 }
 
                 if (l > 10)
                 {
-                    if (runner.y == sTube.y) { runner.y = sTube.y - 1; }
+                    if (runner.y == sTube.y) 
+                    { 
+                        runner.y = sTube.y - 1; 
+                    }
                 }
 
                 //spacebar to jump
@@ -158,20 +177,26 @@ namespace GPA_tentamenopdracht
                     while (Console.KeyAvailable) { Console.ReadKey(true); }
 
                     if (keyPressed.Key == ConsoleKey.Spacebar)
-                    {
+                    { 
                         if (runner.y > 0 || runner.y < -5)
                         {
                             runner.y = runner.y - 5;
                             runner.x = runner.x + 1;
                         }
-                        
-                        if (runner.y >= WINDOW_HEIGHT/2)
+
+                        if (runner.y >= WINDOW_HEIGHT /2)
                         {
-                            runner.y = WINDOW_HEIGHT/2;
+                            runner.y = WINDOW_HEIGHT /2;
+                        }
+
+                        if (runner.y <= WINDOW_HEIGHT / 2)
+                        {
+                            runner.y = WINDOW_HEIGHT / 2;
                         }
                     }
                 }
-
+                
+               
                 //Update Tube
                 List<tu> newList = new List<tu>();
                 for (int i = 0; i < TubeList.Count; i++)
@@ -194,21 +219,29 @@ namespace GPA_tentamenopdracht
                 //draw runner
                 Console.Clear();
                 PrintCharcter(runner.x, runner.y, runner.symbol, runner.color);
+               
 
                 //display text
-                PrintString(2, 1, "Lives: " + Globals.lives, ConsoleColor.White);
-                PrintString(WINDOW_WIDTH / 2 - 5, 1, "Score: " + score, ConsoleColor.White);
+                PrintString(2, 1, "Lives: " + Globals.lives, ConsoleColor.Yellow);
+                PrintString(WINDOW_WIDTH / 2 - 5, 1, "Score: " + score, ConsoleColor.Yellow);
+                PrintString(47, 1, "Press spacebar to jump", ConsoleColor.Yellow);
 
-                //draw line 
+                //draw white dotted line under scores
                 for (int i = 1; i < WINDOW_WIDTH - 1; i++)
                 {
-                    Print(i, 3, '-', ConsoleColor.White);
+                    Print(i, 3, '-', ConsoleColor.Red);
                 }
+
+                for (int i = 1; i < WINDOW_WIDTH - 1; i++)
+                {
+                    Print(i, 29, '^', ConsoleColor.Red);
+                }
+
 
                 //draw tube platforms
                 for (int z = 0; z < TubeList.Count; z++)
                 {
-                    PrintTube(TubeList[z].x, TubeList[z].y, 10, "::::::::::", ConsoleColor.White); 
+                    PrintTube(TubeList[z].x, TubeList[z].y, 10, "::::::::::", ConsoleColor.Red); 
                 }
 
            
