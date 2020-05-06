@@ -68,18 +68,18 @@ namespace GPA_tentamenopdracht
             }
         }
 
-        static void Main(string[] args)
+        static void Main(string[] args) // first called method at start
         {
             //intialize game
             Console.CursorVisible = false;
             Console.Title = "Runner";
             const int WINDOW_HEIGHT = 30;
             const int WINDOW_WIDTH = 70;
-            Console.BackgroundColor = ConsoleColor.Black;
+            Console.BackgroundColor = ConsoleColor.Black; // only functionable option...
             //unfortunately I did not managed to get a working background image, this code below used to work in previous assignments...
-            //Texture2d background;
+            //Texture2d background; declare
             //...
-            //background = Content.Load<Texture2D>("cityBackground");
+            //background = Content.Load<Texture2D>("cityBackground"); initialize
 
             bool isGamePlay = true;
             
@@ -174,7 +174,10 @@ namespace GPA_tentamenopdracht
                 {
                     ConsoleKeyInfo keyPressed = Console.ReadKey(true);
 
-                    while (Console.KeyAvailable) { Console.ReadKey(true); }
+                    while (Console.KeyAvailable) 
+                    { 
+                        Console.ReadKey(true); 
+                    }
 
                     if (keyPressed.Key == ConsoleKey.Spacebar)
                     { 
@@ -232,6 +235,7 @@ namespace GPA_tentamenopdracht
                     Print(i, 3, '-', ConsoleColor.Red);
                 }
 
+                //draw spikey bottom line at floor
                 for (int i = 1; i < WINDOW_WIDTH - 1; i++)
                 {
                     Print(i, 29, '^', ConsoleColor.Red);
