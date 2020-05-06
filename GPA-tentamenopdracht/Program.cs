@@ -129,7 +129,7 @@ namespace GPA_tentamenopdracht
                         {
                             if (runner.y + 1 == TubeList[i].y && runner.x + 1 >= TubeList[i].x && runner.x + 1 <= TubeList[i].x + 10)
                             {
-                                Globals.fall = false;
+                                Globals.fall = false;// player is on platform
                                 score = score + 1;
                             }
                         }
