@@ -75,18 +75,18 @@ namespace GPA_tentamenopdracht
             Console.Title = "Runner";
             const int WINDOW_HEIGHT = 30;
             const int WINDOW_WIDTH = 70;
-
+            Console.BackgroundColor = ConsoleColor.Black;
             //unfortunately I did not managed to get a working background image, this code below used to work in previous assignments...
             //Texture2d background;
             //...
             //background = Content.Load<Texture2D>("cityBackground");
 
             bool isGamePlay = true;
-            List<tu> TubeList = new List<tu>();
-
-            Random randomGenerator = new Random();
-            int score = 0;
             
+            List<tu> TubeList = new List<tu>();
+            Random randomGenerator = new Random();
+            
+            int score = 0;
             int t = 0;
             tu sTube = new tu();
             sTube.x = 0;
@@ -189,9 +189,9 @@ namespace GPA_tentamenopdracht
                             runner.y = WINDOW_HEIGHT /2;
                         }
 
-                        if (runner.y <= WINDOW_HEIGHT / 2)
+                        if (runner.y <= WINDOW_HEIGHT /2)
                         {
-                            runner.y = WINDOW_HEIGHT / 2;
+                            runner.y = WINDOW_HEIGHT /2;
                         }
                     }
                 }
@@ -241,11 +241,14 @@ namespace GPA_tentamenopdracht
                 //draw tube platforms
                 for (int z = 0; z < TubeList.Count; z++)
                 {
-                    PrintTube(TubeList[z].x, TubeList[z].y, 10, "::::::::::", ConsoleColor.Red); 
+                    PrintTube(TubeList[z].x, TubeList[z].y, 10, "::::::::::", ConsoleColor.Red);
+                    PrintTube(TubeList[z].x, TubeList[z].y + 1, 10, "||||||||||", ConsoleColor.Red);
+                    PrintTube(TubeList[z].x, TubeList[z].y + 2, 10, "||||||||||", ConsoleColor.Red);
+                    PrintTube(TubeList[z].x, TubeList[z].y + 3, 10, "::::::::::", ConsoleColor.Red);
                 }
 
-           
-                Thread.Sleep(20); //delay 
+
+                Thread.Sleep(20); //game speed delay 
 
 
             }
